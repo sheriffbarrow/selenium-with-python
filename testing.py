@@ -9,9 +9,9 @@ def demo():
     driver = webdriver.Chrome()
     driver.maximize_window()
     driver.get(url)
-    print(len(driver.get_cookies()))
+    cookie = driver.get_cookies()
     print( driver.get_cookies())
-    print('heelo git hub')
+
     emaildd = driver.find_element(by=By.NAME, value='q')
 
     button = driver.find_element(by=By.CSS_SELECTOR, value='button')
