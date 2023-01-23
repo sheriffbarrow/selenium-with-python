@@ -15,8 +15,8 @@ class LoginTest(unittest.TestCase):
     def test_login(self):
         driver = self.driver
         self.login = LoginPage(driver)
-        self.login.enter_email('s.hygienic@yahoo.com')
-        self.login.enter_password('!s0249612579!SS')
+        self.login.enter_email('email')
+        self.login.enter_password('pass')
         self.login.click_login()
 
     def tearDown(self):

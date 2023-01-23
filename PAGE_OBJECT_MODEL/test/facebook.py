@@ -9,7 +9,6 @@ import pickle
 url = 'https://web.facebook.com'
 
 
-
 def login():
 
     driver = webdriver.Chrome()
@@ -27,14 +26,14 @@ def login():
     login.click()
     time.sleep(10)
     cookies = driver.get_cookies()
-    pickle.dump(cookies, open('../../facebook.pkl', 'wb'))
+    pickle.dump(cookies, open('facebook.pkl', 'wb'))
 
     time.sleep(5)
 
 
 def load_cookies():
     driver = webdriver.Chrome()
-    cookie_list = pickle.load(open('../../facebook.pkl', "rb"))
+    cookie_list = pickle.load(open('facebook.pkl', "rb"))
     url = 'https://web.facebook.com'
     driver.get(url)
     for cookie in cookie_list:

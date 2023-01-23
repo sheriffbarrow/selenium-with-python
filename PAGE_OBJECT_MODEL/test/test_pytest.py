@@ -5,18 +5,9 @@ from selenium.webdriver.common.by import By
 import time
 
 
+@pytest.mark.usefixtures('setup')
 class TestClick:
-    @pytest.fixture
-    def setup(self):
-        global driver
-        self.driver = webdriver.Chrome()
-        self.driver.get('https://www.moneyhelper.org.uk/en/money-troubles/coronavirus/use-our-money-navigator-tool')
-
-        yield
-        self.driver.quit()
-        print('using yield to quit the browser')
-
-    def test_click(self, setup):
+    def test_click(self):
         """clicking to close a cooking popup"""
         self.driver.find_element(By.XPATH, '//*[@id="ccc-notify-accept"]').click()
         time.sleep(3)
