@@ -1,18 +1,33 @@
 import os
 import pytest
 from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.firefox import GeckoDriverManager
 
 
 @pytest.fixture(scope='class')
-def setup(request):
+def setup(request, browser):
     global driver
-    driver = webdriver.Chrome()
+    if browser == "chrome":
+        driver = webdriver.Chrome(ChromeDriverManager().install())
+    elif browser == "firefox":
+        driver = webdriver.Firefox(executable_path=GeckoDriverManager().install())
+    else:
+        print("unknown browser, please enter a valid browser")
     driver.get('https://www.moneyhelper.org.uk/en/money-troubles/coronavirus/use-our-money-navigator-tool')
+    driver.maximize_window()
     request.cls.driver = driver
-
     yield
-    driver.quit()
-    print('using yield to quit the browser')
+    driver.close()
+
+
+def pytest_addoption(parser):
+    parser.addoption("--browser")
+
+
+@pytest.fixture(scope="class", autouse=True)
+def browser(request):
+    return request.config.getoption("--browser")
 
 
 @pytest.hookimpl(hookwrapper=True)
@@ -44,4 +59,3 @@ def take_screenshot(name):
 
 def pytest_html_report_title(report):
     report.title = 'money helper'
-
